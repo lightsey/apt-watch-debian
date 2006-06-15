@@ -1,0 +1,42 @@
+Source: apt-watch
+Section: admin
+Priority: optional
+Maintainer: John Lightsey <lightsey@debian.org>
+Build-Depends: debhelper (>= 4.0.0), libpam0g-dev | libpam-dev, libfam-dev, libpanel-applet2-dev, libapt-pkg-dev
+Standards-Version: 3.7.2.0
+
+Package: apt-watch-backend
+Architecture: any
+Depends: apt-watch-interface, ${shlibs:Depends}
+Replaces: apt-watch (<< 0.3.2-6)
+Description: Applet that monitors apt sources for upgrades (backend slave)
+ apt-watch is an applet that will inform you when upgrades are
+ available for your computer.  It is similar to Windows Update or the
+ Red Hat Network applet.
+ .
+ This package contains the backend client.  It must be used in
+ conjunction with a graphical frontend.
+
+Package: apt-watch-gnome
+Architecture: any
+Depends: apt-watch-backend, ${shlibs:Depends}
+Replaces: apt-watch (<< 0.3.2-6)
+Provides: apt-watch-interface
+Recommends: synaptic | aptitude
+Description: Applet that monitors apt sources for upgrades (GNOME applet)
+ apt-watch is an applet that will inform you when upgrades are
+ available for your computer.  It is similar to Windows Update or the
+ Red Hat Network applet.
+ .
+ This package contains the GNOME applet graphical interface.
+
+Package: apt-watch
+Architecture: all
+Depends: apt-watch-gnome, apt-watch-backend
+Description: Applet that monitors apt sources for upgrades (transitional package)
+ apt-watch is an applet that will inform you when upgrades are
+ available for your computer.  It is similar to Windows Update or the
+ Red Hat Network applet.
+ .
+ This is a transitional dummy package to ensure clean upgrades from
+ old releases.  It can be safely removed after upgrade.

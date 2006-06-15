@@ -1,0 +1,104 @@
+apt-watch (0.3.2-7) unstable; urgency=low
+
+  * apt-watch-gnome and apt-watch-backend are now marked as
+    replacing versions of apt-watch prior to 0.3.2-6
+    Closes: #366024
+  * Clarified short package descriptions
+    Closes: #364573
+  * Added binary-indep target to debian/rules
+  * Updated standards version to 3.7.2.0
+
+ -- John Lightsey <lightsey@debian.org>  Tue, 9 May 2006 13:57:00 -0600
+ 
+apt-watch (0.3.2-6) unstable; urgency=low
+
+  * Added time of last update to GNOME applet tooltip
+  * Split apt-watch into backend/frontend packages
+  * Applied GNOME HIG improvements from Sebastian Heinlein
+    with some minor changes
+    Closes: #248458
+  * Fixed inaccurate download progress calculation
+    Closes: #310441
+    
+ -- John Lightsey <lightsey@debian.org>  Wed, 5 Apr 2006 11:07:00 -0600
+
+apt-watch (0.3.2-5) unstable; urgency=low
+
+  * New Maintainer (Debian and upstream)
+    Many thanks to Daniel Burrows for creating apt-watch.
+  * Fixed do_update and do_reload in apt-watch-slave.cc to
+    fix error with missing .apt-watch/archive/partial/ directory
+    Closes: #275401
+  * Changed apt-watch-slave.cc, apt-watch-auth-helper.cc, and
+    apt-watch-gnome.cc to request a backend reload after a package
+    manager is run
+    Closes: #296556
+  * Added waitpid() call in shutdown_auth_handler() to reap dead
+    child processes
+  * Removed excess border around panel applet from apt-watch-gnome.cc
+    Closes: #257587, #301899
+  * Changed applet name and description in apt-watch.server to
+    more functionality-descriptive values
+    Closes: #257589
+  * Changed package short description to indicate apt-watch is a
+    GNOME applet
+    Closes: #308817
+    
+ -- John Lightsey <lightsey@debian.org>  Wed, 25 Jan 2006 13:52:00 -0600
+
+apt-watch (0.3.2-4) unstable; urgency=low
+
+  * Remove the gdx_pixbuf check and strip it from Build-Depends (Closes: #265123).
+
+ -- Daniel Burrows <dburrows@debian.org>  Sat, 24 Sep 2005 10:40:28 -0700
+
+apt-watch (0.3.2-3) unstable; urgency=low
+
+  * Build against the new apt; add a Build-Depends to force the buildds to
+    use the new version as well.  (Closes: #316631)
+
+ -- Daniel Burrows <dburrows@debian.org>  Sat,  2 Jul 2005 13:56:24 -0400
+
+apt-watch (0.3.2-2) unstable; urgency=low
+
+  * Backport fix from SVN to not double-prompt for the password.
+    (Closes: #250167)
+
+ -- Daniel Burrows <dburrows@debian.org>  Thu, 20 May 2004 23:45:32 -0400
+
+apt-watch (0.3.2-1) unstable; urgency=low
+
+  * New upstream release.
+    - The program works now even if FAM is not available.
+      (Closes: #237567, #247334)
+
+ -- Daniel Burrows <dburrows@debian.org>  Wed,  5 May 2004 00:12:30 -0400
+
+apt-watch (0.3.1-2) unstable; urgency=low
+
+  * Remove empty /usr/sbin and /usr/bin directories (oops, Closes: #238850)
+
+ -- Daniel Burrows <dburrows@debian.org>  Fri, 19 Mar 2004 09:24:31 -0500
+
+apt-watch (0.3.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Daniel Burrows <dburrows@debian.org>  Fri, 19 Mar 2004 09:11:20 -0500
+
+apt-watch (0.3-1) unstable; urgency=low
+
+  * New upstream release
+      - Icons are now used to display the status, not text.
+        (Closes: #237928)
+
+  * Now needs libgdk-pixbuf-dev; Build-Depends added.
+
+ -- Daniel Burrows <dburrows@debian.org>  Thu, 18 Mar 2004 23:56:05 -0500
+
+apt-watch (0.2-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Daniel Burrows <dburrows@debian.org>  Sun, 29 Feb 2004 20:21:08 -0500
+

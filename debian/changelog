@@ -1,4 +1,4 @@
-apt-watch (0.3.2-7.1) unstable; urgency=low
+apt-watch (0.3.2-8) unstable; urgency=low
 
   * Applied Martin Michlmayr's patch to fix GCC 4.2 build errors
     Closes: #364596

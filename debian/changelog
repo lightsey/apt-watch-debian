@@ -1,3 +1,16 @@
+apt-watch (0.3.2-7.1) unstable; urgency=low
+
+  * Applied Martin Michlmayr's patch to fix GCC 4.2 build errors
+    Closes: #364596
+  * Thanks to Margarita Manterola for previous NMU
+    Closes: #380728, #367088
+  * Updated README to explain relationships between -gnome and -backend
+    packages
+    Closes: #369496
+  * Moved debian/docs to debian/<package>.docs
+
+ -- John Lightsey <lightsey@debian.org>  Tue, 31 Oct 2006 14:37:00 -0600
+
 apt-watch (0.3.2-7.1) unstable; urgency=medium
 
   * Non-maintainer upload to fix wrong handling of GConf schemas and lack of

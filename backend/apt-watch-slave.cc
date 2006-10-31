@@ -521,7 +521,7 @@ static void do_su(int cmdfd, int outfd)
     {
     case 0:
       {
-	char *authhelper=LIBEXECDIR "/apt-watch-auth-helper";
+	char authhelper[]=LIBEXECDIR "/apt-watch-auth-helper";
 
 	close(cmdfd);
 	close(outfd);

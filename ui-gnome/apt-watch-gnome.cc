@@ -1043,7 +1043,7 @@ static void run_error_dlg(const char *message)
 
 static bool start_slave(PanelApplet *applet)
 {
-  char *argv[]={LIBEXECDIR "/apt-watch-slave", NULL};
+  char *argv[]={const_cast<char *>(LIBEXECDIR "/apt-watch-slave"), NULL};
 
   // Clear out any messages lingering from a previous slave.
   progress_message="";

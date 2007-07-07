@@ -1,3 +1,10 @@
+apt-watch (0.3.2-9) unstable; urgency=low
+
+  * Applied Martin Michlmayr's patch to fix GCC 4.3 build errors
+    Closes: #417088
+
+ -- John Lightsey <lightsey@debian.org>  Sat, 07 Jul 2007 13:55:00 -0600
+
 apt-watch (0.3.2-8) unstable; urgency=low
 
   * Applied Martin Michlmayr's patch to fix GCC 4.2 build errors

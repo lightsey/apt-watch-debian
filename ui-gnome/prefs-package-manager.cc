@@ -10,6 +10,7 @@
 
 #include <common/fileutl.h>
 
+#include <cctype>
 #include <string>
 
 #include <gtk/gtk.h>

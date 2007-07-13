@@ -6,6 +6,7 @@ apt-watch (0.3.2-9) unstable; urgency=low
     Closes: #432041
   * Fix linker flags to link libglade properly
     Closes: #431324
+  * Added AM_MAINTAINER_MODE to configure.ac
 
  -- John Lightsey <lightsey@debian.org>  Thu, 12 Jul 2007 21:55:00 -0600
 

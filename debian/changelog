@@ -4,8 +4,10 @@ apt-watch (0.3.2-9) unstable; urgency=low
     Closes: #417088
   * Rebuilt with newest libapt-pkg
     Closes: #432041
+  * Fix linker flags to link libglade properly
+    Closes: #431324
 
- -- John Lightsey <lightsey@debian.org>  Sat, 07 Jul 2007 13:55:00 -0600
+ -- John Lightsey <lightsey@debian.org>  Thu, 12 Jul 2007 21:55:00 -0600
 
 apt-watch (0.3.2-8) unstable; urgency=low
 

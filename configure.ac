@@ -53,7 +53,7 @@ CXXFLAGS="$CXXFLAGS -Wall -Werror"
 
 dnl TODO: where else can it be?
 LIBGLADE_CFLAGS="-I/usr/include/libglade-2.0"
-LIBGLADE_LIBS="-Lglade-2.0"
+LIBGLADE_LIBS="-lglade-2.0"
 
 AC_CHECK_HEADER(apt-pkg/init.h, , [AC_MSG_ERROR([Can't find the APT header files -- please install libapt-pkg-dev])])
 

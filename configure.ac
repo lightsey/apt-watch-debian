@@ -8,6 +8,8 @@ dnl AC_CONFIG_SRCDIR([apt-watch.cc])
 dnl AM_CONFIG_HEADER([config.h])
 AM_CONFIG_HEADER(config.h)
 
+AM_MAINTAINER_MODE
+
 AC_LANG([C++])
 
 dnl  Checks for programs.

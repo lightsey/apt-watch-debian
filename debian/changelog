@@ -4,6 +4,7 @@ apt-watch (0.3.2-10) unstable; urgency=low
     Closes: #454839
   * Change ownership of moved files to effective UID/GID
     Closes: #425578
+  * Don't ignore errors from make distclean in debian/rules
 
  -- John Lightsey <lightsey@debian.org>  Thu, 06 Feb 2008 18:41:00 -0600
 

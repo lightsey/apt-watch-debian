@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <sys/fcntl.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 #include <utime.h>
 

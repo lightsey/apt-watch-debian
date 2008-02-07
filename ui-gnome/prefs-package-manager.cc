@@ -10,6 +10,7 @@
 
 #include <common/fileutl.h>
 
+#include <cstring>
 #include <cctype>
 #include <string>
 

@@ -16,6 +16,7 @@
 
 #include <security/pam_appl.h>
 
+#include <cstring>
 #include <stdlib.h>
 #include <signal.h>
 #include <sys/types.h>

@@ -4,6 +4,7 @@
 
 #include "fileutl.h"
 
+#include <cstring>
 #include <dirent.h>
 #include <errno.h>
 #include <stdlib.h>

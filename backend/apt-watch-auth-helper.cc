@@ -255,7 +255,6 @@ int main(int argc, char **argv)
       // Really become root, or xterm will slap us down to the
       // unprivileged user again.
       setuid(0);
-      setgid(0);
 
       // Run the appropriate program.  Uses the shell to do splitting,
       // etc (you have to know the root password to get here anyway,

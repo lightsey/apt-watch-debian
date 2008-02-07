@@ -442,7 +442,7 @@ uninstall-am: uninstall-libexecPROGRAMS
 
 
 install-exec-local:
-	install -D -m 4755 apt-watch-auth-helper $(DESTDIR)$(libexecdir)/apt-watch-auth-helper
+	install -D -m 6755 apt-watch-auth-helper $(DESTDIR)$(libexecdir)/apt-watch-auth-helper
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

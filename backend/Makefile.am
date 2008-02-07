@@ -13,4 +13,4 @@ apt_watch_slave_LDADD=@FAM_LDADD@ ../common/libapt-watch-common.a -lapt-pkg
 apt_watch_auth_helper_LDADD=../common/libapt-watch-common.a -lpam
 
 install-exec-local:
-	install -D -m 4755 apt-watch-auth-helper $(DESTDIR)$(libexecdir)/apt-watch-auth-helper
+	install -D -m 6755 apt-watch-auth-helper $(DESTDIR)$(libexecdir)/apt-watch-auth-helper

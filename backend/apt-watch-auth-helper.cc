@@ -21,6 +21,7 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
 #include <string>
 
@@ -233,6 +234,8 @@ int main(int argc, char **argv)
       // everything from ~/.apt-watch/archives to /var/lib/apt/archives.
       //
       // TODO: read the apt configuration here?
+
+      setegid(0);
 
       copy_recursive(home+"/.apt-watch/lists", "/var/lib/apt/lists");
       move_recursive(home+"/.apt-watch/archives", "/var/cache/apt/archives");

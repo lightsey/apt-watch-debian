@@ -1,3 +1,10 @@
+apt-watch (0.3.2-11) unstable; urgency=low
+
+  * Add libglade2-dev to build-depends
+    Closes: #524386
+
+ -- John Lightsey <lightsey@debian.org>  Sat, 25 Apr 2008 09:14:00 -0600
+
 apt-watch (0.3.2-10) unstable; urgency=low
 
   * Applied patch from Aurelien Jacobs to fix GCC 4.3 build errors

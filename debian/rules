@@ -63,12 +63,13 @@ install: build
 	dh_installdirs
 
 	$(MAKE) install GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR=$(CURDIR)/debian/apt-watch/
-	
+
 # Copy/move files to apt-watch-gnome directory	
 	mkdir -p $(CURDIR)/debian/apt-watch-gnome/usr/lib/apt-watch/ \
 		$(CURDIR)/debian/apt-watch-gnome/usr/share/apt-watch/apt-watch/ \
 		$(CURDIR)/debian/apt-watch-gnome/usr/share/doc/ \
-		$(CURDIR)/debian/apt-watch-gnome/etc/
+		$(CURDIR)/debian/apt-watch-gnome/etc/ \
+		$(CURDIR)/debian/apt-watch/usr/share/lintian/overrides/
 	mv $(CURDIR)/debian/apt-watch/usr/lib/apt-watch/apt-watch \
 	   $(CURDIR)/debian/apt-watch-gnome/usr/lib/apt-watch/
 	mv $(CURDIR)/debian/apt-watch/usr/share/apt-watch/apt-watch/apt-watch.glade  \
@@ -77,7 +78,8 @@ install: build
 	   $(CURDIR)/debian/apt-watch-gnome/etc/
 	mv $(CURDIR)/debian/apt-watch/usr/lib/bonobo/ \
 	   $(CURDIR)/debian/apt-watch-gnome/usr/lib/
-	
+	install -D -p -o root -g root -m 644 $(CURDIR)/debian/lintian $(CURDIR)/debian/apt-watch/usr/share/lintian/overrides/apt-watch-backend
+
 # Rename remaining files to "backend" package
 	mv $(CURDIR)/debian/apt-watch/* $(CURDIR)/debian/apt-watch-backend/
 

@@ -1,0 +1,2 @@
+#apt-watch-auth-helper authenticates the user with pam, so it must be setuid
+apt-watch-backend: setuid-binary usr/lib/apt-watch/apt-watch-auth-helper 4755 root/root

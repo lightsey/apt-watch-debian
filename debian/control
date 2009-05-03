@@ -7,7 +7,7 @@ Standards-Version: 3.7.2.0
 
 Package: apt-watch-backend
 Architecture: any
-Depends: apt-watch-interface, ${shlibs:Depends}, xterm
+Depends: apt-watch-interface, ${shlibs:Depends}, xterm, ${misc:Depends}
 Replaces: apt-watch (<< 0.3.2-6)
 Description: Applet that monitors apt sources for upgrades (backend slave)
  apt-watch is an applet that will inform you when upgrades are
@@ -32,7 +32,7 @@ Description: Applet that monitors apt sources for upgrades (GNOME applet)
 
 Package: apt-watch
 Architecture: all
-Depends: apt-watch-gnome, apt-watch-backend
+Depends: apt-watch-gnome, apt-watch-backend, ${misc:Depends}
 Description: Applet that monitors apt sources for upgrades (transitional package)
  apt-watch is an applet that will inform you when upgrades are
  available for your computer.  It is similar to Windows Update or the

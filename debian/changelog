@@ -1,3 +1,11 @@
+apt-watch (0.3.2-12) unstable; urgency=low
+
+  * Apply patch from Martin Michlmayr to fix GCC 4.4 build errors
+    Closes: #526168
+  * Add misc:Depends for apt-watch and apt-watch-backend packages
+
+ -- John Lightsey <lightsey@debian.org>  Sun, 03 May 2008 07:45:00 -0600
+
 apt-watch (0.3.2-11) unstable; urgency=low
 
   * Add libglade2-dev to build-depends

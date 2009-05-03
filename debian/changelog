@@ -8,14 +8,14 @@ apt-watch (0.3.2-12) unstable; urgency=low
   * Update copyright information
   * Bump standards version to 3.8.1.0
 
- -- John Lightsey <lightsey@debian.org>  Sun, 03 May 2008 07:45:00 -0600
+ -- John Lightsey <lightsey@debian.org>  Sun, 03 May 2009 07:45:00 -0600
 
 apt-watch (0.3.2-11) unstable; urgency=low
 
   * Add libglade2-dev to build-depends
     Closes: #524386
 
- -- John Lightsey <lightsey@debian.org>  Sat, 25 Apr 2008 09:14:00 -0600
+ -- John Lightsey <lightsey@debian.org>  Sat, 25 Apr 2009 09:14:00 -0600
 
 apt-watch (0.3.2-10) unstable; urgency=low
 

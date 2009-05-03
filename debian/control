@@ -3,7 +3,7 @@ Section: admin
 Priority: optional
 Maintainer: John Lightsey <lightsey@debian.org>
 Build-Depends: debhelper (>= 4.9.8.1), libpam0g-dev | libpam-dev, libfam-dev, libpanel-applet2-dev, libapt-pkg-dev, libglade2-dev
-Standards-Version: 3.7.2.0
+Standards-Version: 3.8.1.0
 
 Package: apt-watch-backend
 Architecture: any

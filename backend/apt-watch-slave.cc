@@ -863,9 +863,6 @@ void slave_handle_fam()
 
   while(FAMPending(&famconn))
     {
-      // This is used to detect when FAM dies.
-      ev.code=(FAMCodes) -1;
-
       FAMNextEvent(&famconn, &ev);
 
       // Ignore lockfiles.
@@ -880,13 +877,7 @@ void slave_handle_fam()
 	  last_cache_change=time(0);
 	  break;
 
-	case -1:
-	  fprintf(stderr, "FAM died on us.\n");
-	  FAMClose(&famconn);
-	  fam_available=false;
-	  return;
-
-	default:
+      	default:
 	  // Drop other events on the floor.
 	  break;
 	}

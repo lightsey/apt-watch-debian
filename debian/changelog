@@ -1,3 +1,10 @@
+apt-watch (0.3.2-13) unstable; urgency=low
+
+  * Fix GCC 4.4 build errors in apt-watch-slave.cc
+    Closes: #527099
+
+ -- John Lightsey <lightsey@debian.org>  Sat, 30 May 2009 19:09:00 -0600
+
 apt-watch (0.3.2-12) unstable; urgency=low
 
   * Apply patch from Martin Michlmayr to fix GCC 4.4 build errors

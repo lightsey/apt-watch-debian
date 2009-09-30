@@ -1,6 +1,7 @@
 apt-watch (0.3.2-14) unstable; urgency=low
 
   * Change all uids and gids to work new setuid warnings in gtk
+  * bump standards version to 3.8.3.0
 
  -- John Lightsey <lightsey@debian.org>  Tue, 29 Sep 2009 20:43:11 -0500
 

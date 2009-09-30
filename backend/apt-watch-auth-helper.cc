@@ -22,7 +22,6 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#define _GNU_SOURCE
 #include <unistd.h>
 
 

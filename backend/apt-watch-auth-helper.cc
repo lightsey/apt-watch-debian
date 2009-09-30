@@ -22,7 +22,9 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#define _GNU_SOURCE
 #include <unistd.h>
+
 
 #include <string>
 
@@ -256,9 +258,9 @@ int main(int argc, char **argv)
       close(0);
       close(1);
 
-      // Really become root, or xterm will slap us down to the
-      // unprivileged user again.
-      setuid(0);
+      // Really become root, or xterm and synaptic will have a fit
+      setresgid(0,0,0);
+      setresuid(0,0,0);
 
       // Run the appropriate program.  Uses the shell to do splitting,
       // etc (you have to know the root password to get here anyway,

@@ -51,7 +51,7 @@ AC_LANG_POP(C)
 
 AM_GCONF_SOURCE_2
 
-CXXFLAGS="$CXXFLAGS -Wall -Werror"
+CXXFLAGS="$CXXFLAGS -Wall"
 
 dnl TODO: where else can it be?
 LIBGLADE_CFLAGS="-I/usr/include/libglade-2.0"

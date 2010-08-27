@@ -1,7 +1,7 @@
 apt-watch (0.3.2-15) unstable; urgency=low
 
   * Remove -Werror from CXXFLAGS to avoid deprecation warnings from libapt 8.0
-    Closes: 594353
+    Closes: #594353
 
  -- John Lightsey <lightsey@debian.org>  Thu, 26 Aug 2010 14:23:27 -0500
 

@@ -1,6 +1,10 @@
 /* apt-watch-slave: the slave run as superuser (from su)
  *
  * Expects argv[1] to be an fd on which arguments are passed.
+ *
+ * Copyright 2004 Daniel Burrows
+ * Copyright 2011 John Lightsey
+ *
  */
 
 #include <stdio.h>
@@ -23,6 +27,7 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <utime.h>
 
@@ -384,6 +389,7 @@ static void write_init_reply(int outfd)
 static void do_update(int outfd)
 {
   setup_list_dir(outfd);
+  setup_archive_dir(outfd);
 
   SlaveProgress progress(outfd);
 
@@ -406,8 +412,14 @@ static void do_update(int outfd)
       return;
     }
 
-  pkgAcquire fetcher(&log);
-
+  pkgAcquire fetcher;
+  
+  if (!fetcher.Setup(&log, ""))
+    {
+      dump_errors(APPLET_REPLY_FATALERROR, outfd);
+      return;
+    }
+  
   if(!sources.GetIndexes(&fetcher))
     {
       dump_errors(APPLET_REPLY_FATALERROR, outfd);
@@ -421,7 +433,7 @@ static void do_update(int outfd)
     }
 
   cache->Close();
-  if(!cache->Open(progress, false))
+  if(!cache->Open(&progress, false))
     {
       dump_errors(APPLET_REPLY_FATALERROR, outfd);
       return;
@@ -458,13 +470,16 @@ static void do_update(int outfd)
 
 static void do_reload(int outfd)
 {
+  setup_list_dir(outfd);
+  setup_archive_dir(outfd);
+  
   SlaveProgress progress(outfd);
 
   copy_lists();
 
   cache->Close();
 
-  if(!cache->Open(progress, false))
+  if(!cache->Open(&progress, false))
     dump_errors(APPLET_REPLY_FATALERROR, outfd);
   else
     write_cmd_reply(outfd);
@@ -516,7 +531,7 @@ static void do_su(int cmdfd, int outfd)
     {
     case 0:
       {
-	char *authhelper=LIBEXECDIR "/apt-watch-auth-helper";
+	char authhelper[]=LIBEXECDIR "/apt-watch-auth-helper";
 
 	close(cmdfd);
 	close(outfd);
@@ -600,8 +615,14 @@ static void do_download(int cmdfd, int outfd)
   read(cmdfd, &download_all, sizeof(download_all));
 
   slaveAcquireStatus log(outfd);
-  pkgAcquire fetcher(&log);
-
+  pkgAcquire fetcher;
+  
+  if (!fetcher.Setup(&log, ""))
+    {
+      dump_errors(APPLET_REPLY_FATALERROR, outfd);
+      return;
+    }
+  
   pkgSourceList sources;
   pkgRecords records(*cache);
 
@@ -738,11 +759,17 @@ static void setup_list_dir(int outfd)
 
 static void shutdown_auth_helper()
 {
+  int Status = 0;
   close(to_authhelper_fd);
   close(from_authhelper_fd);
 
   to_authhelper_fd=-1;
   from_authhelper_fd=-1;
+
+  // reap any dead children
+  while (waitpid(-1, &Status, WNOHANG) > 0)
+  ;
+  
 }
 
 /** Returns \b true to terminate the program successfully. */
@@ -831,9 +858,13 @@ static void slave_handle_auth_input(int outfd)
 
       case APPLET_REPLY_AUTH_OK:
 	write_msgid(outfd, c);
-
 	break;
-
+	
+      case APPLET_REPLY_AUTH_FINISHED:
+	write_msgid(outfd, c);
+	shutdown_auth_helper();
+	break;
+	
       default:
 	write_msg(outfd, APPLET_REPLY_AUTH_FAIL, "Garbled reply from the authentication helper.");
 	shutdown_auth_helper();
@@ -848,9 +879,6 @@ void slave_handle_fam()
 
   while(FAMPending(&famconn))
     {
-      // This is used to detect when FAM dies.
-      ev.code=(FAMCodes) -1;
-
       FAMNextEvent(&famconn, &ev);
 
       // Ignore lockfiles.
@@ -865,13 +893,7 @@ void slave_handle_fam()
 	  last_cache_change=time(0);
 	  break;
 
-	case -1:
-	  fprintf(stderr, "FAM died on us.\n");
-	  FAMClose(&famconn);
-	  fam_available=false;
-	  return;
-
-	default:
+      	default:
 	  // Drop other events on the floor.
 	  break;
 	}
@@ -1021,7 +1043,7 @@ int main(int argc, char **argv)
   cache=new pkgCacheFile;
   SlaveProgress progress(outfd);
 
-  if(!cache->Open(progress, false) || _error->PendingError())
+  if(!cache->Open(&progress, false) || _error->PendingError())
     {
       dump_errors(APPLET_REPLY_INIT_FAILED, outfd);
       return -1;

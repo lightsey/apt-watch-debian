@@ -2,7 +2,6 @@
 
 #include "fileutl.h"
 
-#include <cstdio>
 #include <string>
 
 using namespace std;

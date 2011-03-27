@@ -23,7 +23,6 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <sys/stat.h>
-#include <sys/wait.h>
 #include <unistd.h>
 #include <utime.h>
 
@@ -385,7 +384,6 @@ static void write_init_reply(int outfd)
 static void do_update(int outfd)
 {
   setup_list_dir(outfd);
-  setup_archive_dir(outfd);
 
   SlaveProgress progress(outfd);
 
@@ -460,9 +458,6 @@ static void do_update(int outfd)
 
 static void do_reload(int outfd)
 {
-  setup_list_dir(outfd);
-  setup_archive_dir(outfd);
-  
   SlaveProgress progress(outfd);
 
   copy_lists();
@@ -521,7 +516,7 @@ static void do_su(int cmdfd, int outfd)
     {
     case 0:
       {
-	char authhelper[]=LIBEXECDIR "/apt-watch-auth-helper";
+	char *authhelper=LIBEXECDIR "/apt-watch-auth-helper";
 
 	close(cmdfd);
 	close(outfd);
@@ -743,17 +738,11 @@ static void setup_list_dir(int outfd)
 
 static void shutdown_auth_helper()
 {
-  int Status = 0;
   close(to_authhelper_fd);
   close(from_authhelper_fd);
 
   to_authhelper_fd=-1;
   from_authhelper_fd=-1;
-
-  // reap any dead children
-  while (waitpid(-1, &Status, WNOHANG) > 0)
-  ;
-  
 }
 
 /** Returns \b true to terminate the program successfully. */
@@ -842,13 +831,9 @@ static void slave_handle_auth_input(int outfd)
 
       case APPLET_REPLY_AUTH_OK:
 	write_msgid(outfd, c);
+
 	break;
-	
-      case APPLET_REPLY_AUTH_FINISHED:
-	write_msgid(outfd, c);
-	shutdown_auth_helper();
-	break;
-	
+
       default:
 	write_msg(outfd, APPLET_REPLY_AUTH_FAIL, "Garbled reply from the authentication helper.");
 	shutdown_auth_helper();
@@ -863,6 +848,9 @@ void slave_handle_fam()
 
   while(FAMPending(&famconn))
     {
+      // This is used to detect when FAM dies.
+      ev.code=(FAMCodes) -1;
+
       FAMNextEvent(&famconn, &ev);
 
       // Ignore lockfiles.
@@ -877,7 +865,13 @@ void slave_handle_fam()
 	  last_cache_change=time(0);
 	  break;
 
-      	default:
+	case -1:
+	  fprintf(stderr, "FAM died on us.\n");
+	  FAMClose(&famconn);
+	  fam_available=false;
+	  return;
+
+	default:
 	  // Drop other events on the floor.
 	  break;
 	}

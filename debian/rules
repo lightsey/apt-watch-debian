@@ -66,7 +66,7 @@ install: build
 		$(CURDIR)/debian/apt-watch/usr/share/lintian/overrides/
 	mv $(CURDIR)/debian/apt-watch/usr/lib/apt-watch/apt-watch \
 	   $(CURDIR)/debian/apt-watch-gnome/usr/lib/apt-watch/
-	mv $(CURDIR)/debian/apt-watch/usr/share/apt-watch/apt-watch/apt-watch.glade  \
+	mv $(CURDIR)/debian/apt-watch/usr/share/apt-watch/apt-watch/apt-watch.ui  \
 	   $(CURDIR)/debian/apt-watch-gnome/usr/share/apt-watch/apt-watch/
 	mv $(CURDIR)/debian/apt-watch/etc/gconf/ \
 	   $(CURDIR)/debian/apt-watch-gnome/etc/

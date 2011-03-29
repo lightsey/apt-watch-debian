@@ -1,3 +1,15 @@
+apt-watch (0.3.3-1) unstable; urgency=low
+
+  * New upstream release
+    Deprecate glade in favor of GtkBuilder
+    Remove deprecated libapt-pkg methods.
+    Remove deprecated Gnome classes in preparation for Gnome 3.
+    Import all fixes from Debian package.
+  * Update homepage and vcs in debian/control
+  * Add debian/watch
+
+ -- John Lightsey <lightsey@debian.org>  Mon, 28 Mar 2011 23:10:00 -0500
+
 apt-watch (0.3.2-15) unstable; urgency=low
 
   * Remove -Werror from CXXFLAGS to avoid deprecation warnings from libapt 8.0

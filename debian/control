@@ -2,8 +2,10 @@ Source: apt-watch
 Section: admin
 Priority: optional
 Maintainer: John Lightsey <lightsey@debian.org>
-Build-Depends: debhelper (>= 7), libpam0g-dev | libpam-dev, libfam-dev, libpanel-applet2-dev, libapt-pkg-dev, libglade2-dev
-Standards-Version: 3.8.3.0
+Build-Depends: debhelper (>= 7), libpam0g-dev | libpam-dev, libfam-dev, libpanel-applet2-dev, libapt-pkg-dev
+Standards-Version: 3.9.1.0
+Vcs-Git: http://nixnuts.net/git/apt-watch.git
+Homepage: http://nixnuts.net/apt-watch/
 
 Package: apt-watch-backend
 Architecture: any

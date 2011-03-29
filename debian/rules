@@ -44,12 +44,6 @@ clean:
 	rm -f build-stamp
 
 	[ ! -f Makefile ] || $(MAKE) distclean
-ifneq "$(wildcard /usr/share/misc/config.sub)" ""
-	cp -f /usr/share/misc/config.sub config.sub
-endif
-ifneq "$(wildcard /usr/share/misc/config.guess)" ""
-	cp -f /usr/share/misc/config.guess config.guess
-endif
 	rm -rf $(CURDIR)/debian/apt-watch/ \
 	       $(CURDIR)/debian/apt-watch-gnome/ \
 	       $(CURDIR)/debian/apt-watch-backend/

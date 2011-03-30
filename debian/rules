@@ -25,6 +25,7 @@ ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 endif
 
 config.status: configure
+	dh_quilt_patch
 	dh_testdir
 	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --sysconfdir=/etc --libexecdir=\$${prefix}/lib/apt-watch --datadir=\$${prefix}/share/apt-watch
 
@@ -47,7 +48,7 @@ clean:
 	rm -rf $(CURDIR)/debian/apt-watch/ \
 	       $(CURDIR)/debian/apt-watch-gnome/ \
 	       $(CURDIR)/debian/apt-watch-backend/
-
+	dh_quilt_unpatch
 	dh_clean 
 
 install: build

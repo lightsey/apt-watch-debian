@@ -7,8 +7,9 @@ apt-watch (0.3.3-1) unstable; urgency=low
     Import all fixes from Debian package.
   * Update homepage and vcs in debian/control
   * Add debian/watch
+  * Update package to source format 3.0 (quilt)
 
- -- John Lightsey <lightsey@debian.org>  Mon, 28 Mar 2011 23:10:00 -0500
+ -- John Lightsey <lightsey@debian.org>  Tue, 29 Mar 2011 23:12:00 -0500
 
 apt-watch (0.3.2-15) unstable; urgency=low
 

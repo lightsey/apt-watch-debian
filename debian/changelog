@@ -1,3 +1,14 @@
+apt-watch (0.4.0-1) experimental; urgency=low
+
+  * New upstream release
+    Updated to Gnome Panel 3 (Closes: #638074)
+  * Update standards version to 3.9.2.0
+  * Update debian/rules to handle new gnome 3 installation directories
+    and files.
+  * Update debian/copyright with current year
+
+ -- John Lightsey <lightsey@debian.org>  Sun, 28 Aug 2011 11:20:11 -0500
+
 apt-watch (0.3.3-1) unstable; urgency=low
 
   * New upstream release

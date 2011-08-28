@@ -27,7 +27,7 @@ endif
 config.status: configure
 	dh_quilt_patch
 	dh_testdir
-	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --sysconfdir=/etc --libexecdir=\$${prefix}/lib/apt-watch --datadir=\$${prefix}/share/apt-watch
+	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --sysconfdir=/etc --libexecdir=\$${prefix}/lib/apt-watch --datadir=\$${prefix}/share
 
 
 build: build-stamp
@@ -59,20 +59,21 @@ install: build
 
 	$(MAKE) install GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 DESTDIR=$(CURDIR)/debian/apt-watch/
 
-# Copy/move files to apt-watch-gnome directory	
+# Copy/move files to apt-watch-gnome directory
 	mkdir -p $(CURDIR)/debian/apt-watch-gnome/usr/lib/apt-watch/ \
-		$(CURDIR)/debian/apt-watch-gnome/usr/share/apt-watch/apt-watch/ \
+		$(CURDIR)/debian/apt-watch-gnome/usr/share/apt-watch/ \
 		$(CURDIR)/debian/apt-watch-gnome/usr/share/doc/ \
 		$(CURDIR)/debian/apt-watch-gnome/etc/ \
+		$(CURDIR)/debian/apt-watch-gnome/usr/share/gnome-panel/4.0/applets/ \
 		$(CURDIR)/debian/apt-watch/usr/share/lintian/overrides/
 	mv $(CURDIR)/debian/apt-watch/usr/lib/apt-watch/apt-watch \
 	   $(CURDIR)/debian/apt-watch-gnome/usr/lib/apt-watch/
-	mv $(CURDIR)/debian/apt-watch/usr/share/apt-watch/apt-watch/apt-watch.ui  \
-	   $(CURDIR)/debian/apt-watch-gnome/usr/share/apt-watch/apt-watch/
+	mv $(CURDIR)/debian/apt-watch/usr/share/apt-watch/apt-watch.ui  \
+	   $(CURDIR)/debian/apt-watch-gnome/usr/share/apt-watch/
+	mv $(CURDIR)/debian/apt-watch/usr/share/gnome-panel/4.0/applets/org.gnome.panel.Apt_Watch.panel-applet  \
+	   $(CURDIR)/debian/apt-watch-gnome/usr/share/gnome-panel/4.0/applets/
 	mv $(CURDIR)/debian/apt-watch/etc/gconf/ \
 	   $(CURDIR)/debian/apt-watch-gnome/etc/
-	mv $(CURDIR)/debian/apt-watch/usr/lib/bonobo/ \
-	   $(CURDIR)/debian/apt-watch-gnome/usr/lib/
 	install -D -p -o root -g root -m 644 $(CURDIR)/debian/lintian $(CURDIR)/debian/apt-watch/usr/share/lintian/overrides/apt-watch-backend
 
 # Rename remaining files to "backend" package

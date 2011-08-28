@@ -45,8 +45,9 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__installdirs = "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(pkgdatadir)" \
-	"$(DESTDIR)$(schemadir)" "$(DESTDIR)$(serverdir)"
+am__installdirs = "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(appletdir)" \
+	"$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(schemadir)" \
+	"$(DESTDIR)$(servicedir)"
 PROGRAMS = $(libexec_PROGRAMS)
 am_apt_watch_OBJECTS = apt-watch-gnome.$(OBJEXT) \
 	apt-watch-preferences.$(OBJEXT) prefs-check-freq.$(OBJEXT) \
@@ -97,7 +98,7 @@ am__nobase_list = $(am__nobase_strip_setup); \
 am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-DATA = $(pkgdata_DATA) $(schema_DATA) $(server_DATA)
+DATA = $(applet_DATA) $(pkgdata_DATA) $(schema_DATA) $(service_DATA)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
@@ -169,6 +170,7 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
+LIBPANEL_APPLET_DIR = @LIBPANEL_APPLET_DIR@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
 MAINT = @MAINT@
@@ -244,12 +246,15 @@ apt_watch_SOURCES = \
 pkgdata_DATA = apt-watch.ui
 apt_watch_LDADD = @GNOME_LDADD@ ../common/libapt-watch-common.a
 INCLUDES = @GNOME_INCLUDES@ -I../common
-serverdir = $(libdir)/bonobo/servers
-server_in_files = apt-watch.server.in
-server_DATA = $(server_in_files:.server.in=.server)
+appletdir = $(LIBPANEL_APPLET_DIR)
+applet_in_files = org.gnome.panel.Apt_Watch.panel-applet.in
+applet_DATA = $(applet_in_files:.panel-applet.in=.panel-applet)
+servicedir = $(datadir)/dbus-1/services
+service_in_files = org.gnome.panel.applet.Apt_WatchApplet_Factory.service.in
+service_DATA = $(service_in_files:.service.in=.service)
 uidir = $(datadir)/gnome-2.0/ui
 # ui_DATA = apt-watch.xml
-EXTRA_DIST = apt-watch.server.in apt-watch.ui apt-watch.schemas
+EXTRA_DIST = org.gnome.panel.Apt_Watch.panel-applet.in.in $(service_in_files) apt-watch.ui apt-watch.schemas
 SUBDIRS = pixmaps
 
 # From the gconf web site:
@@ -368,6 +373,26 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+install-appletDATA: $(applet_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(appletdir)" || $(MKDIR_P) "$(DESTDIR)$(appletdir)"
+	@list='$(applet_DATA)'; test -n "$(appletdir)" || list=; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(appletdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(appletdir)" || exit $$?; \
+	done
+
+uninstall-appletDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(applet_DATA)'; test -n "$(appletdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	test -n "$$files" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(appletdir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(appletdir)" && rm -f $$files
 install-pkgdataDATA: $(pkgdata_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(pkgdatadir)" || $(MKDIR_P) "$(DESTDIR)$(pkgdatadir)"
@@ -408,26 +433,26 @@ uninstall-schemaDATA:
 	test -n "$$files" || exit 0; \
 	echo " ( cd '$(DESTDIR)$(schemadir)' && rm -f" $$files ")"; \
 	cd "$(DESTDIR)$(schemadir)" && rm -f $$files
-install-serverDATA: $(server_DATA)
+install-serviceDATA: $(service_DATA)
 	@$(NORMAL_INSTALL)
-	test -z "$(serverdir)" || $(MKDIR_P) "$(DESTDIR)$(serverdir)"
-	@list='$(server_DATA)'; test -n "$(serverdir)" || list=; \
+	test -z "$(servicedir)" || $(MKDIR_P) "$(DESTDIR)$(servicedir)"
+	@list='$(service_DATA)'; test -n "$(servicedir)" || list=; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  echo "$$d$$p"; \
 	done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(serverdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(serverdir)" || exit $$?; \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(servicedir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(servicedir)" || exit $$?; \
 	done
 
-uninstall-serverDATA:
+uninstall-serviceDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(server_DATA)'; test -n "$(serverdir)" || list=; \
+	@list='$(service_DATA)'; test -n "$(servicedir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	test -n "$$files" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(serverdir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(serverdir)" && rm -f $$files
+	echo " ( cd '$(DESTDIR)$(servicedir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(servicedir)" && rm -f $$files
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.
@@ -627,7 +652,7 @@ check: check-recursive
 all-am: Makefile $(PROGRAMS) $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(schemadir)" "$(DESTDIR)$(serverdir)"; do \
+	for dir in "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(appletdir)" "$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(schemadir)" "$(DESTDIR)$(servicedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -678,8 +703,8 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-data-local install-pkgdataDATA \
-	install-schemaDATA install-serverDATA
+install-data-am: install-appletDATA install-data-local \
+	install-pkgdataDATA install-schemaDATA install-serviceDATA
 
 install-dvi: install-dvi-recursive
 
@@ -724,8 +749,9 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-libexecPROGRAMS uninstall-pkgdataDATA \
-	uninstall-schemaDATA uninstall-serverDATA
+uninstall-am: uninstall-appletDATA uninstall-libexecPROGRAMS \
+	uninstall-pkgdataDATA uninstall-schemaDATA \
+	uninstall-serviceDATA
 
 .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) ctags-recursive \
 	install-am install-strip tags-recursive
@@ -735,22 +761,31 @@ uninstall-am: uninstall-libexecPROGRAMS uninstall-pkgdataDATA \
 	clean-libexecPROGRAMS ctags ctags-recursive distclean \
 	distclean-compile distclean-generic distclean-tags distdir dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-data-local install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am \
-	install-libexecPROGRAMS install-man install-pdf install-pdf-am \
-	install-pkgdataDATA install-ps install-ps-am \
-	install-schemaDATA install-serverDATA install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
-	tags tags-recursive uninstall uninstall-am \
-	uninstall-libexecPROGRAMS uninstall-pkgdataDATA \
-	uninstall-schemaDATA uninstall-serverDATA
+	install-appletDATA install-data install-data-am \
+	install-data-local install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-libexecPROGRAMS install-man \
+	install-pdf install-pdf-am install-pkgdataDATA install-ps \
+	install-ps-am install-schemaDATA install-serviceDATA \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic pdf pdf-am \
+	ps ps-am tags tags-recursive uninstall uninstall-am \
+	uninstall-appletDATA uninstall-libexecPROGRAMS \
+	uninstall-pkgdataDATA uninstall-schemaDATA \
+	uninstall-serviceDATA
 
+org.gnome.panel.Apt_Watch.panel-applet: $(applet_in_files)
+	$(AM_V_GEN)sed \
+	-e "s|\@LIBEXECDIR\@|$(libexecdir)|" \
+	-e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
+	$< > $@
 
-$(server_DATA): $(server_in_files)
-	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
+org.gnome.panel.applet.Apt_WatchApplet_Factory.service: $(service_in_files)
+	$(AM_V_GEN)sed \
+	-e "s|\@LIBEXECDIR\@|$(libexecdir)|" \
+	-e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
+	$< > $@
 
 @GCONF_SCHEMAS_INSTALL_TRUE@install-data-local:
 @GCONF_SCHEMAS_INSTALL_TRUE@	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) gconftool-2 --makefile-install-rule $(srcdir)/$(schema_DATA)

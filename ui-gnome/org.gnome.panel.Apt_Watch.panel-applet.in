@@ -1,0 +1,11 @@
+[Applet Factory]
+Id=Apt_WatchApplet_Factory
+Location=@LIBEXECDIR@/apt-watch
+Name=Apt-Watch Applet Factory
+Description=Factory for Apt-Watch applets
+
+[Apt_WatchApplet]
+Name=APT Update Watcher
+Description=Automatically checks for software updates
+Icon=gnome-applets.png
+BonoboId=OAFIID:Apt_WatchApplet

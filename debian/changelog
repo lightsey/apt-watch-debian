@@ -1,3 +1,10 @@
+apt-watch (0.4.0-2) unstable; urgency=low
+
+  * Bump debian release for unstable
+    Closes: #638074
+
+ -- John Lightsey <lightsey@debian.org>  Mon, 17 Oct 2011 21:37:34 -0500
+
 apt-watch (0.4.0-1) experimental; urgency=low
 
   * New upstream release
